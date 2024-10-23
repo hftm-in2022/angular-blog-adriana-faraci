@@ -27,7 +27,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: './blog-app/package-lock.json' # Pfad zur package-lock.json anpassen
+        cache-dependency-path: ./blog-app/package-lock.json 
 
     - name: Install dependencies
       run: npm ci
