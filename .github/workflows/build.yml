@@ -19,15 +19,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Change directory to blog-app
-      working-directory: ./blog-app
-
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: ./blog-app/package-lock.json 
+        cache-dependency-path: './blog-app/package-lock.json' # Pfad zur package-lock.json anpassen
 
     - name: Install dependencies
       run: npm ci
@@ -40,3 +37,4 @@ jobs:
     - name: Build
       run: npm run build
       working-directory: ./blog-app
+
