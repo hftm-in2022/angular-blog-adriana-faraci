@@ -19,21 +19,24 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Verify package-lock.json exists
-      run: ls -la ./package-lock.json
+    - name: Change directory to blog-app
+      working-directory: ./blog-app
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: './package-lock.json' # relativer Pfad zur package-lock.json
+        cache-dependency-path: './blog-app/package-lock.json' # Pfad zur package-lock.json anpassen
 
     - name: Install dependencies
       run: npm ci
+      working-directory: ./blog-app
 
     - name: Run tests
       run: npm run test:ci
+      working-directory: ./blog-app
 
     - name: Build
       run: npm run build
+      working-directory: ./blog-app
