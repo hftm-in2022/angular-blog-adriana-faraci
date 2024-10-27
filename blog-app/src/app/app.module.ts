@@ -8,9 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { BlogListComponent } from './components/blog-list/blog-list.component';
 import { BlogComponent } from './components/blog/blog.component';
+import { loggingInterceptor } from './interceptors/logging.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { BlogComponent } from './components/blog/blog.component';
     MatIconModule,
   ],
   providers: [
-    provideHttpClient() // Bereitstellung von HttpClient für HTTP-Requests
+   provideHttpClient(withInterceptors([loggingInterceptor])),
   ],
   bootstrap: [AppComponent] // AppComponent als Bootstrap-Komponente
 })
