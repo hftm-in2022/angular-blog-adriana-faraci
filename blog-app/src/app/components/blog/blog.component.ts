@@ -1,6 +1,6 @@
 // blog.component.ts
 import { Component, Input } from '@angular/core';
-import { BlogEntry } from '../../models/blog.model';
+import { Blog } from '../../schemas/blog.shema';
 
 @Component({
   selector: 'app-blog',
@@ -8,5 +8,5 @@ import { BlogEntry } from '../../models/blog.model';
   styleUrls: ['./blog.component.scss']
 })
 export class BlogComponent {
-  @Input() blogEntry!: BlogEntry;
+  @Input() blogEntry!: Blog;
 }

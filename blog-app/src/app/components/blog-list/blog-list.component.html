@@ -1,3 +1,5 @@
 <div class="blog-list">
-  <app-blog *ngFor="let blogEntry of blogEntries" [blogEntry]="blogEntry"></app-blog>
+  @for(blog of blogEntries; track blog.id ){
+  <app-blog [blogEntry]="blog"></app-blog>
+  }
 </div>

@@ -1,23 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { BlogResponse } from '../models/blog.model';
-import { catchError } from 'rxjs/operators';
-
+import { map, Observable } from 'rxjs';
+import { z } from 'zod';
+import { Blog, blogSchema } from '../schemas/blog.shema';
+ 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BlogService {
-  private apiUrl = '/api/entries';
-
+  private apiUrl = '/api';
+ 
   constructor(private http: HttpClient) {}
-
-  getEntries(pageIndex: number = 0, pageSize: number = 100): Observable<BlogResponse> {
-    return this.http.get<BlogResponse>(`${this.apiUrl}?pageIndex=${pageIndex}&pageSize=${pageSize}`).pipe(
-      catchError(error => {
-        console.error('Fehler beim Abrufen der Blog-Übersicht:', error);
-        throw error;
-      })
+ 
+  public getEntries(): Observable<Blog[]> {
+    return this.http.get<{ data: Blog[] }>(this.apiUrl + '/entries').pipe(
+      map((response) => {
+        const parsed = z.array(blogSchema).safeParse(response.data);
+        if (parsed.success) {
+          return parsed.data;
+        } else {
+          console.error('Data validation failed:', parsed.error);
+          throw new Error('Data validation failed');
+        }
+      }),
     );
   }
 }

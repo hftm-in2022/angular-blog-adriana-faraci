@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../services/blog.service';
-import { BlogEntry } from '../../models/blog.model';
+import { Blog } from '../../schemas/blog.shema';
 
 @Component({
   selector: 'app-blog-list',
@@ -8,7 +8,8 @@ import { BlogEntry } from '../../models/blog.model';
   styleUrls: ['./blog-list.component.scss']
 })
 export class BlogListComponent implements OnInit {
-  blogEntries: BlogEntry[] = [];
+  blogEntries: Blog[] = [];
+  fallBackImageUrl = 'https://picsum.photos/800/200';
 
   constructor(private blogService: BlogService) {}
 
@@ -17,13 +18,13 @@ export class BlogListComponent implements OnInit {
   }
 
   loadBlogEntries(): void {
-    this.blogService.getEntries(0, 10).subscribe({
+       this.blogService.getEntries().subscribe({
       next: (response) => {
-        this.blogEntries = response.data;
+        this.blogEntries = response.map((blog) => ({
+          ...blog,
+          headerImageUrl: blog.headerImageUrl || this.fallBackImageUrl,
+        }));
       },
-      error: (error) => {
-        console.error('Fehler beim Laden der Blog-Einträge:', error);
-      }
     });
   }
 }

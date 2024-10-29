@@ -1,12 +1,12 @@
 .blog-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem; /* Abstand zwischen den Karten */
-  justify-content: center; /* Zentriert die Karten */
+  gap: 1rem; 
+  justify-content: center; 
 }
 
 app-blog {
-  flex: 1 1 300px; /* Karten haben eine minimale Breite von 300px, passen sich aber flexibel an */
-  max-width: 500px; /* Maximale Breite der Karten */
+  flex: 1 1 300px;
+  max-width: 500px; 
   
 }
