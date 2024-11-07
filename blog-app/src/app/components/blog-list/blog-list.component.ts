@@ -20,9 +20,17 @@ export class BlogListComponent implements OnInit {
   loadBlogEntries(): void {
        this.blogService.getEntries().subscribe({
       next: (response) => {
-        this.blogEntries = response.map((blog) => ({
-          ...blog,
-          headerImageUrl: blog.headerImageUrl || this.fallBackImageUrl,
+          this.blogEntries = response.data.map((blog: any) => ({
+          title: blog.title,
+          id: blog.id,
+          contentPreview: blog.contentPreview,
+          author: blog.author,
+          likes: blog.likes,
+          comments: blog.comments,
+          likedByMe: blog.likedByMe,
+          createdByMe: blog.createdByMe,
+          createdAt: blog.createdAt,
+          headerImageUrl: blog.headerImageUrl
         }));
       },
     });

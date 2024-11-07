@@ -1,14 +1,33 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationComponent } from './navigation.component';
+import { NavigationModule } from '../../module/navigation.module';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('NavigationComponent', () => {
   let component: NavigationComponent;
   let fixture: ComponentFixture<NavigationComponent>;
 
+  const activatedRouteMock = {
+    snapshot: {
+      paramMap: {
+        get: (key: string) => 'mockId'
+      }
+    },
+    params: of({ id: 'mockId' })
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavigationComponent]
+      imports: [
+        NavigationModule,
+        BrowserAnimationsModule
+      ],
+      declarations: [NavigationComponent],
+      providers: [
+        { provide: ActivatedRoute, useValue: activatedRouteMock }
+      ]
     })
     .compileComponents();
 
