@@ -1,0 +1,20 @@
+.app-container {
+  height: 100vh;
+  display: flex;
+}
+
+.app-drawer {
+  width: 250px;
+}
+
+.toggle-btn {
+  margin-right: 16px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.content {
+  padding: 16px;
+}
