@@ -1,37 +1,35 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { BlogListComponent } from './components/blog-list/blog-list.component';
-import { BlogComponent } from './components/blog/blog.component';
+import { AppRoutingModule } from './app.routes';
+import { BlogModule } from './module/blog.module';
+import { provideHttpClient, withInterceptors, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { loggingInterceptor } from './interceptors/logging.interceptor';
+import { NavigationModule } from './module/navigation.module';
+import { SharedModule } from './shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    BlogComponent,
-    BlogListComponent 
+    AppComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
+    AppRoutingModule,
+    BlogModule,
     MatToolbarModule,
-    MatCardModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatIconModule,
+    NavigationModule,
+    SharedModule
   ],
   providers: [
-   provideHttpClient(withInterceptors([loggingInterceptor])),
+    provideHttpClient(withInterceptors([loggingInterceptor])),
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent] // AppComponent als Bootstrap-Komponente
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,28 +1,25 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { z } from 'zod';
-import { Blog, blogSchema } from '../schemas/blog.shema';
+import { environment } from '../../environments/environment.development';
+import { Entries, BlogDetails, EntriesSchema, BlogDetailsSchema } from '../schemas/blog.shema';
  
 @Injectable({
   providedIn: 'root',
 })
 export class BlogService {
-  private apiUrl = '/api';
- 
-  constructor(private http: HttpClient) {}
- 
-  public getEntries(): Observable<Blog[]> {
-    return this.http.get<{ data: Blog[] }>(this.apiUrl + '/entries').pipe(
-      map((response) => {
-        const parsed = z.array(blogSchema).safeParse(response.data);
-        if (parsed.success) {
-          return parsed.data;
-        } else {
-          console.error('Data validation failed:', parsed.error);
-          throw new Error('Data validation failed');
-        }
-      }),
-    );
+  httpClient = inject(HttpClient);
+
+  getEntries(): Observable<Entries> {
+    return this.httpClient
+      .get<Entries>(`${environment.serviceUrl}/entries`)
+      .pipe(map((entries) => EntriesSchema.parse(entries)));
+  }
+
+  getBlogById(id: number): Observable<BlogDetails> {
+    return this.httpClient
+      .get<BlogDetails>(`${environment.serviceUrl}/entries/${id}`)
+      .pipe(map((blogDetails) => BlogDetailsSchema.parse(blogDetails)));
   }
 }

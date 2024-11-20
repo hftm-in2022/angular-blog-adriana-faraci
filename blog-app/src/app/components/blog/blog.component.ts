@@ -9,4 +9,9 @@ import { Blog } from '../../schemas/blog.shema';
 })
 export class BlogComponent {
   @Input() blogEntry!: Blog;
+
+  setCursor(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    target.focus();
+  }
 }
