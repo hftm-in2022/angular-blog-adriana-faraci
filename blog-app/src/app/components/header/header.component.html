@@ -1,0 +1,8 @@
+<header>
+  <mat-toolbar color="primary">
+    <span>Blog App</span>
+    <span class="spacer"></span>
+    <span *ngIf="userName">Welcome, {{ userName }}</span>
+    <button *ngIf="isUser" mat-button routerLink="/add-blog">Add Blog</button>
+  </mat-toolbar>
+</header>

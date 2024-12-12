@@ -11,6 +11,7 @@ import { loggingInterceptor } from './interceptors/logging.interceptor';
 import { NavigationModule } from './module/navigation.module';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthConfigModule } from './auth/auth-config.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BlogModule,
     MatToolbarModule,
     NavigationModule,
-    SharedModule
+    SharedModule,
+    AuthConfigModule
   ],
   providers: [
     provideHttpClient(withInterceptors([loggingInterceptor])),
