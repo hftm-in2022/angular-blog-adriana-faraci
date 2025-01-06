@@ -1,23 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isUser: boolean = false;
+  userName: string | null = null;
 
-  constructor(private oidcSecurityService: OidcSecurityService) {}
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
-    this.oidcSecurityService.userData$.subscribe(userData => {
-      this.isUser = this.hasRole(userData, 'user');
+    this.authService.userName$.subscribe((name) => {
+      this.userName = name;
     });
   }
 
-  private hasRole(userData: any, role: string): boolean {
-    return userData && userData.role && userData.role.includes(role);
+  login(): void {
+    this.authService.login();
   }
+
+  logout(): void {
+    this.authService.logout();
+  }
+
 }
+ 
