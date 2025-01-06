@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { NavigationComponent } from '../components/navigation/navigation.component';
 import { MatCardModule } from '@angular/material/card';
+import { HeaderComponent } from '../components/header/header.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    HeaderComponent
   ],
   exports: [
     MatToolbarModule,
