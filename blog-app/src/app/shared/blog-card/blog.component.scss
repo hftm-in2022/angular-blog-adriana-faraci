@@ -1,0 +1,65 @@
+.blog-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px; /* Abgerundete Ecken */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sanfter Schatten */
+  overflow: hidden; /* Inhalt wird innerhalb der Karte gehalten */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth Hover Effekt */
+}
+
+.blog-card:hover {
+  transform: translateY(-5px); /* Leichtes Anheben */
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15); /* Stärkere Schatten bei Hover */
+}
+
+.image-container {
+  height: 200px; /* Einheitliche Höhe für Bilder */
+  overflow: hidden; /* Bild bleibt innerhalb der Karte */
+}
+
+mat-card-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; /* Bild füllt den Container und wird zugeschnitten */
+}
+
+mat-card-header {
+  padding: 16px;
+  text-align: center; /* Zentriert Titel und Untertitel */
+}
+
+mat-card-title {
+  font-size: 1.25rem; /* Größerer Titel */
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+mat-card-subtitle {
+  font-size: 0.875rem;
+  color: #757575; /* Subtile Farbgebung */
+}
+
+mat-card-content {
+  flex-grow: 1;
+  padding: 16px;
+  font-size: 0.9rem;
+  line-height: 1.5; /* Verbesserte Lesbarkeit */
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #f9f9f9; /* Heller Hintergrund für die Aktionen */
+  border-top: 1px solid #e0e0e0; /* Dünne Linie zur Trennung */
+}
+
+.action-button {
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s; /* Smooth Button Hover */
+}
+
+.action-button:hover {
+  background-color: rgba(0, 0, 0, 0.05); /* Leichter Hover-Effekt */
+}

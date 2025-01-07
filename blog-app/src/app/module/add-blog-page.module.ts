@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { AddBlogComponent } from '../components/add-blog-page/add-blog/add-blog.component';
+import { AddBlogComponent } from '../features/add-blog/add-blog.component';
 
 const routes: Routes = [
   {
