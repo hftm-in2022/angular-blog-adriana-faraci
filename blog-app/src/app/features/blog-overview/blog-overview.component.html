@@ -1,0 +1,5 @@
+<div class="blog-list">
+ @for (blog of model().data; track blog.id) {
+  <app-blog [blogEntry]="blog"></app-blog>
+  }
+</div>

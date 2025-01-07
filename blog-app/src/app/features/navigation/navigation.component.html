@@ -1,0 +1,64 @@
+<mat-sidenav-container class="app-container">
+  <!-- Sidebar -->
+ <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="false"
+    [autoFocus]="false"
+  >
+    <mat-toolbar>
+      @if (isAuthenticated()) {
+        <div class="user-info">
+          <span>{{ userName() }}</span>
+        </div>
+      }
+    </mat-toolbar>
+    <mat-nav-list>
+      @if (!isAuthenticated()) {
+        <a mat-list-item (click)="login()" (keyup)="login()" tabindex="0"
+          >Login</a
+        >
+      }
+      @if (isAuthenticated()) {
+        <a mat-list-item href="#" [routerLink]="['/add']">+ Add Blog</a>
+      }
+      @if (isAuthenticated()) {
+        <a mat-list-item href="#" (click)="logout()">Logout</a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+
+  <!-- Main Content -->
+  <mat-sidenav-content>
+    <!-- Top Toolbar -->
+    <mat-toolbar class="custom-toolbar">
+      <button mat-icon-button class="menu-button" (click)="toggleDrawer()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="app-title">My Angular App</span>
+      <span class="spacer"></span>
+      <ng-container *ngIf="isAuthenticated()">
+        <span class="username">{{ userName() }}</span>
+        <button mat-stroked-button color="accent" class="auth-button" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Logout
+        </button>
+      </ng-container>
+      <ng-container *ngIf="!isAuthenticated()">
+        <button mat-raised-button color="accent" class="auth-button" (click)="login()">
+          <mat-icon>login</mat-icon>
+          Login
+        </button>
+      </ng-container>
+    </mat-toolbar>
+
+    <!-- Content -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

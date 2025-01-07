@@ -1,0 +1,68 @@
+.app-container {
+  height: 100%;
+}
+
+.app-drawer {
+  width: 250px;
+}
+
+.custom-toolbar {
+  background-color: #3f51b5; /* Primärfarbe */
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-left: 8px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.username {
+  margin-right: 16px;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.menu-button {
+  color: #ffffff;
+}
+
+.auth-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-transform: none;
+  font-weight: 500;
+  color: #000000; 
+  border-radius: 10px;
+}
+
+.auth-button:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Hover-Effekt */
+  border-radius: 4px;
+  transition: background-color 0.3s;
+   border-radius: 10px;
+}
+
+mat-toolbar mat-icon {
+  font-size: 24px;
+  vertical-align: middle;
+}
+
+mat-toolbar .mat-button {
+  font-size: 0.9rem;
+  margin-left: 8px;
+}
+
+.content {
+  margin-top: 30px; 
+  padding: 30px; 
+}
