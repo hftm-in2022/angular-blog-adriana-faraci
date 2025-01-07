@@ -3,6 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { isAuthenticatedGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
+   {
+    path: '',
+      loadChildren: () =>
+      import('./features/blog-overview/blog-overview.routes'),
+  },
   {
     path: 'blogs',
       loadChildren: () =>
