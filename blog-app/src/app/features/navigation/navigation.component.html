@@ -1,0 +1,42 @@
+<mat-drawer-container class="app-container">
+  <!-- Sidebar Navigation -->
+  <mat-drawer
+    mode="side"
+    #drawer
+    class="app-drawer"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) ? false : true"
+  >
+    <mat-nav-list>
+      <!-- Statischer Link für alle Benutzer -->
+      <a mat-list-item routerLink="/blogs" routerLinkActive="active">Blogs</a>
+
+      <!-- Dynamischer Link nur für eingeloggte Benutzer -->
+      <a
+        *ngIf="isAuthenticated()"
+        mat-list-item
+        (click)="navigateToAddBlog()"
+        routerLinkActive="active"
+      >
+        + Blog hinzufügen
+      </a>
+    </mat-nav-list>
+  </mat-drawer>
+
+  <!-- Main Content Area -->
+  <mat-drawer-content>
+    <!-- Toolbar mit Toggle-Button -->
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="toggleDrawer()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Menu</span>
+    </mat-toolbar>
+
+    <!-- Router Outlet for Content -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

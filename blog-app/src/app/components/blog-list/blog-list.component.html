@@ -1,7 +1,0 @@
-<div class="blog-list">
-    <ng-container *ngIf="blogEntries$ | async as blogEntries">
-  @for(blog of blogEntries; track blog.id ){
-  <app-blog [blogEntry]="blog"></app-blog>
-  }
-  </ng-container>
-</div>
