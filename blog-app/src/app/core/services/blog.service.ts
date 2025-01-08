@@ -22,4 +22,12 @@ export class BlogService {
       .get<BlogDetails>(`${environment.serviceUrl}/entries/${id}`)
       .pipe(map((blogDetails) => BlogDetailsSchema.parse(blogDetails)));
   }
+
+   saveBlog(blogData: { title: string; content: string }): Observable<any> {
+    return this.httpClient.post(`${environment.serviceUrl}/create`, blogData);
+  }
+
+  checkTitleExists(title: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(`${environment.serviceUrl}/check-title?title=${title}`);
+  }
 }

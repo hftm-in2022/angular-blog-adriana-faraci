@@ -18,9 +18,8 @@ export const routes: Routes = [
     loadChildren: () => import('./features/blog-details/blog-detail.routes')
   },
     {
-    path: 'add-blog-page',
-    loadChildren: () => import('./module/add-blog-page.module').then(m => m.AddBlogPageModule),
-    canActivate: [isAuthenticatedGuard]
+    path: 'blog/add',
+    loadChildren: () => import('./features/add-blog/add-blog.routes'),
   },
    {
     path: '**',
