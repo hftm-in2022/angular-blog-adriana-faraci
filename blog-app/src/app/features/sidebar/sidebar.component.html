@@ -1,0 +1,68 @@
+<mat-drawer-container class="app-container">
+  <!-- Sidebar Navigation -->
+  <mat-drawer
+    #drawer
+    class="app-drawer"
+    mode="side"
+    [opened]="true"
+  >
+    <mat-nav-list>
+      <a mat-list-item routerLink="/blogs" routerLinkActive="active">Blogs</a>
+      <a
+        *ngIf="isAuthenticated()"
+        mat-list-item
+        routerLink="/add"
+        routerLinkActive="active"
+      >
+        + Blog hinzufügen
+      </a>
+    </mat-nav-list>
+  </mat-drawer>
+
+  <!-- Main Content Area -->
+  <mat-drawer-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="app-title">HFTM - Blog App</span>
+      <span class="spacer"></span>
+
+      <ng-container *ngIf="isAuthenticated()">
+        <span class="username">Willkommen, {{ userName() }}!</span>
+        <button
+          *ngIf="hasUserRole()"
+          mat-stroked-button
+          color="accent"
+          class="add-blog-button"
+          routerLink="/add"
+        >
+          + Blog hinzufügen
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          class="auth-button"
+          (click)="logout()"
+        >
+          <mat-icon>logout</mat-icon> Logout
+        </button>
+      </ng-container>
+
+      <button
+        *ngIf="!isAuthenticated()"
+        mat-raised-button
+        color="accent"
+        class="auth-button"
+        (click)="login()"
+      >
+        <mat-icon>login</mat-icon> Login
+      </button>
+    </mat-toolbar>
+
+    <!-- Main Router Outlet -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
