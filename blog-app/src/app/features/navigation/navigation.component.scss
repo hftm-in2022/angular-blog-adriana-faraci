@@ -1,6 +1,5 @@
 .app-container {
   height: 100vh;
-  display: flex;
 }
 
 .app-drawer {
@@ -16,5 +15,6 @@
 }
 
 .content {
+   overflow-y: auto;
   padding: 16px;
 }

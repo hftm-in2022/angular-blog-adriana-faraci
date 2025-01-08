@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { isAuthenticatedGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-   {
+  {
     path: '',
       loadChildren: () =>
       import('./features/blog-overview/blog-overview.routes'),
@@ -17,12 +17,12 @@ export const routes: Routes = [
     path: 'blog/detail',
     loadChildren: () => import('./features/blog-details/blog-detail.routes')
   },
-    {
-    path: 'add-blog-page',
-    loadChildren: () => import('./module/add-blog-page.module').then(m => m.AddBlogPageModule),
-    canActivate: [isAuthenticatedGuard]
+  {
+    path: 'blog/add',
+    loadChildren: () => import('./features/add-blog-page/add-blog-page.routes'),
+    canActivate: [isAuthenticatedGuard],
   },
-   {
+  {
     path: '**',
     redirectTo: 'overview',
   },
