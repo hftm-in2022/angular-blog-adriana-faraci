@@ -11,11 +11,11 @@
         [class.invalid]="title?.invalid && title?.touched"
       />
       <div class="error" *ngIf="title?.invalid && title?.touched">
-        <small *ngIf="title?.errors?.required">Titel ist erforderlich.</small>
-        <small *ngIf="title?.errors?.minlength">
+        <small *ngIf="title?.errors?.['required']">Titel ist erforderlich.</small>
+        <small *ngIf="title?.errors?.['minlength']">
           Titel muss mindestens 3 Zeichen lang sein.
         </small>
-        <small *ngIf="title?.errors?.titleExists">
+        <small *ngIf="title?.errors?.['titleExists']">
           Der Titel existiert bereits.
         </small>
       </div>
@@ -30,8 +30,8 @@
         [class.invalid]="content?.invalid && content?.touched"
       ></textarea>
       <div class="error" *ngIf="content?.invalid && content?.touched">
-        <small *ngIf="content?.errors?.required">Inhalt ist erforderlich.</small>
-        <small *ngIf="content?.errors?.minlength">
+        <small *ngIf="content?.errors?.['required']">Inhalt ist erforderlich.</small>
+        <small *ngIf="content?.errors?.['minlength']">
           Inhalt muss mindestens 10 Zeichen lang sein.
         </small>
       </div>
