@@ -46,9 +46,8 @@ export class NavigationComponent {
     );
 
   constructor() {
-    // Überprüfe Authentifizierungsstatus
     this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated }) => {
-      this.isAuthenticated.set(isAuthenticated); // Setze Signal
+      this.isAuthenticated.set(isAuthenticated); 
     });
   }
 
@@ -56,19 +55,9 @@ export class NavigationComponent {
     this.drawer.toggle();
   }
 
-  login() {
-    this.oidcSecurityService.authorize();
-  }
-
-  logout() {
-    this.oidcSecurityService.logoff().subscribe(() => {
-      this.router.navigate(['/']); // Nach Logout zur Startseite navigieren
-    });
-  }
-
   navigateToAddBlog() {
     if (this.isAuthenticated()) {
-      this.router.navigate(['/add']); // Navigiere zur Add-Blog-Seite
+      this.router.navigate(['/blog/add']);
     } else {
       alert('Bitte loggen Sie sich ein, um einen Blog hinzuzufügen!');
     }

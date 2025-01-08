@@ -1,35 +1,31 @@
-import { CanActivateFn } from '@angular/router';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { CanActivateFn, Router } from '@angular/router';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
-/**
- * Helper function to check if the user has a specific role.
- * @param roles - Array of roles assigned to the user.
- * @param roleToCheck - The role to check for.
- * @returns boolean - True if the user has the role, false otherwise.
- */
-function hasRole(roles: string[], roleToCheck: string): boolean {
-  return roles.includes(roleToCheck);
+function hasRole(accessToken: string, role: string): boolean {
+  const decodedToken = JSON.parse(atob(accessToken.split('.')[1]));
+  const roles: string[] = decodedToken?.realm_access?.roles || [];
+  return roles.includes(role);
 }
 
 export const isAuthenticatedGuard: CanActivateFn = () => {
   const oidcSecurityService = inject(OidcSecurityService);
+  const router = inject(Router);
 
-  // Check if the user is authenticated and retrieve user data
-  return oidcSecurityService.isAuthenticated$.pipe(
-    switchMap((authResult) => {
-      if (!authResult.isAuthenticated) {
-        return new Observable<boolean>((observer) => observer.next(false));
+  return new Promise<boolean>((resolve) => {
+    oidcSecurityService.checkAuth().subscribe(({ isAuthenticated }) => {
+      if (!isAuthenticated) {
+        router.navigate(['']);
+        resolve(false);
+      } else {
+        oidcSecurityService.getAccessToken().subscribe((accessToken) => {
+          if (accessToken && hasRole(accessToken, 'user')) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        });
       }
-
-      return oidcSecurityService.userData$.pipe(
-        map((userData: any) => {
-          const roles = userData?.roles || [];
-          return hasRole(roles, 'user');
-        })
-      );
-    })
-  );
+    });
+  });
 };

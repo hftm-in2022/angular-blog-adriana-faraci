@@ -9,14 +9,6 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   constructor(private oidcSecurityService: OidcSecurityService) {}
 
-  login(): void {
-    this.oidcSecurityService.authorize();
-  }
-
-  logout(): void {
-    this.oidcSecurityService.logoff();
-  }
-
   get isAuthenticated(): Observable<boolean> {
     return this.oidcSecurityService.isAuthenticated$.pipe(
       map((result: AuthenticatedResult) => result.isAuthenticated)

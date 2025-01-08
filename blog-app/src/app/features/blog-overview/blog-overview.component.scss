@@ -1,12 +1,15 @@
 .blog-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem; 
-  justify-content: center; 
+  gap: 1rem;
+  justify-content: center;
+  max-height: 100vh; /* Begrenzung auf die sichtbare Höhe */
+  overflow: hidden; /* Scrollen verhindern */
+  align-content: start; /* Ausrichtung bei mehreren Zeilen */
 }
 
 app-blog {
   flex: 1 1 300px;
-  max-width: 500px; 
-  
+  max-width: 500px;
+  box-sizing: border-box; /* Sicherheitshalber */
 }

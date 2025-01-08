@@ -1,12 +1,11 @@
 import { Routes } from '@angular/router';
-import { AddBlogPageComponent } from './add-blog.component';
+import { AddBlogPageComponent } from './add-blog-page.component';
 import { isAuthenticatedGuard } from '../../core/guards/auth.guard';
 
 const AddBlogRoutes: Routes = [
   {
-    path: 'add',
+    path: '',
     component: AddBlogPageComponent,
-    canActivate: [isAuthenticatedGuard]
   },
 ];
 export default AddBlogRoutes;

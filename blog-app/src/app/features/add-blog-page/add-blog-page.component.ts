@@ -3,19 +3,21 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { finalize } from 'rxjs/operators';
 import { BlogService } from '../../core/services/blog.service';
 import { BlogTitleValidator } from '../../shared/validators/blog-title.validator';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-add-blog',
-  templateUrl: './add-blog.component.html',
-  styleUrls: ['./add-blog.component.scss'],
+  templateUrl: './add-blog-page.component.html',
+  styleUrls: ['./add-blog-page.component.scss'],
   standalone: true,
-  imports:[CommonModule,RouterModule,ReactiveFormsModule]
+  imports: [CommonModule, RouterModule, ReactiveFormsModule]
 })
 export class AddBlogPageComponent {
   blogForm: FormGroup;
-  isSaving = false; // Spinner Status
+  isSaving = false;
+  uploadError: string | null = null;
+  headerImageUrl: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -26,7 +28,7 @@ export class AddBlogPageComponent {
       title: [
         '',
         [Validators.required, Validators.minLength(3)],
-        [this.blogTitleValidator.validate.bind(this.blogTitleValidator)], // Asynchroner Validator
+        [this.blogTitleValidator.validate.bind(this.blogTitleValidator)],
       ],
       content: ['', [Validators.required, Validators.minLength(10)]],
     });
@@ -40,12 +42,31 @@ export class AddBlogPageComponent {
     return this.blogForm.get('content');
   }
 
+  onFileSelected(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.uploadError = null; // Fehler zurücksetzen
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.headerImageUrl = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      this.uploadError = 'Kein gültiges Bild ausgewählt.';
+    }
+  }
+
+  // Blog speichern
   onSave() {
     if (this.blogForm.invalid) return;
 
     this.isSaving = true;
 
-    const blogData = this.blogForm.value;
+    const blogData = {
+      ...this.blogForm.value,
+      headerImageUrl: this.headerImageUrl, // Bild-URL hinzufügen
+    };
+
     this.blogService
       .saveBlog(blogData)
       .pipe(
@@ -57,6 +78,7 @@ export class AddBlogPageComponent {
         () => {
           alert('Blog erfolgreich gespeichert!');
           this.blogForm.reset();
+          this.headerImageUrl = null; // Bild-URL zurücksetzen
         },
         () => {
           alert('Fehler beim Speichern des Blogs.');
@@ -66,5 +88,6 @@ export class AddBlogPageComponent {
 
   onReset() {
     this.blogForm.reset();
+    this.headerImageUrl = null; // Bild-URL zurücksetzen
   }
 }

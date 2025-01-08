@@ -2,29 +2,28 @@
   <span class="app-title">HFTM - Blog App</span>
   <span class="spacer"></span>
 
-  <!-- Benutzername -->
-  <ng-container *ngIf="isAuthenticated()">
+  @if (isAuthenticated()) {
     <span class="username">Willkommen, {{ userName() }}!</span>
-    <a
-      *ngIf="hasUserRole()"
-      mat-stroked-button
-      color="accent"
-      class="add-blog-button"
-      [routerLink]="['/add']"
-    >
-      + Blog hinzufügen
-    </a>
-    <button mat-stroked-button color="accent" class="auth-button" (click)="logout()">
+    @if (hasUserRole()) {
+      <a
+        mat-stroked-button
+        color="accent"
+        class="add-blog-button"
+        [routerLink]="['/add']"
+      >
+        + Blog hinzufügen
+      </a>
+    }
+    <button mat-raised-button color="accent" class="auth-button" (click)="logout()">
       <mat-icon>logout</mat-icon>
       Logout
     </button>
-  </ng-container>
-
-  <!-- Login -->
-  <ng-container *ngIf="!isAuthenticated()">
+  }
+  
+  @if (!isAuthenticated()) {
     <button mat-raised-button color="accent" class="auth-button" (click)="login()">
       <mat-icon>login</mat-icon>
       Login
     </button>
-  </ng-container>
+  }
 </mat-toolbar>

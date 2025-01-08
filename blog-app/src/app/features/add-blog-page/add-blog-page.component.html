@@ -37,6 +37,18 @@
       </div>
     </div>
 
+    <!-- Bild-Upload -->
+<div class="form-group">
+  <label for="headerImage">Header-Bild</label>
+  <input
+    id="headerImage"
+    type="file"
+    (change)="onFileSelected($event)"
+  />
+  <div *ngIf="uploadError" class="error">
+    <small>{{ uploadError }}</small>
+  </div>
+</div>
     <!-- Buttons -->
     <div class="form-actions">
       <button type="button" (click)="onReset()" class="btn reset">Zurücksetzen</button>
