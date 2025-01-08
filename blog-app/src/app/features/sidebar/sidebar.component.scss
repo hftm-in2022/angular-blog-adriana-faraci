@@ -1,0 +1,58 @@
+.app-container {
+  height: 100%;
+  display: flex;
+}
+
+.app-drawer {
+  width: 250px;
+}
+
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.content {
+  padding: 16px;
+}
+
+.mat-toolbar {
+    background-color: #0066cc; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-style: italic;
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .username {
+    margin-right: 16px;
+  }
+
+  .auth-button {
+    margin-left: 8px;
+  }
+}
+
+.app-drawer {
+  width: 250px;
+  display: flex;
+  flex-direction: column; /* Ordnet Inhalte vertikal */
+  justify-content: flex-start; /* Inhalte am Anfang ausrichten */
+  padding-top: 50px; /* Abstand nach oben */
+}
+
+.mat-nav-list {
+  flex-grow: 1; /* Lässt die Navigation flexibler wachsen */
+}
+
+.mat-nav-list a {
+  margin-bottom: 16px; /* Abstand zwischen den Links */
+}

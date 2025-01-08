@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AppRoutingModule } from './app.routes';
 import { BlogComponent } from './shared/blog-card/blog.component';
-import { HeaderComponent } from './features/header/header.component';
-import { NavigationComponent } from './features/navigation/navigation.component';
+import { SideBarComponent } from './features/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +13,7 @@ import { NavigationComponent } from './features/navigation/navigation.component'
       CommonModule,
       BlogComponent,
       MatToolbarModule,
-      HeaderComponent,
-      NavigationComponent],
+      SideBarComponent],
 })
 export class AppComponent {
 }

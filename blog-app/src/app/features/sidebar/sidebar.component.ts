@@ -1,34 +1,47 @@
-import { Component, OnInit, signal, inject } from '@angular/core';
+import { Component, ViewChild, inject, signal } from '@angular/core';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
+  imports: [    CommonModule, // Für die async-Pipe
     MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule,
-  ],
+    RouterModule]
 })
-export class HeaderComponent implements OnInit {
+export class SideBarComponent {
+  @ViewChild(MatDrawer) drawer!: MatDrawer;
+
+  isAuthenticated = signal(false);
   userName = signal<string | null>(null);
-  isAuthenticated = signal<boolean>(false);
-  hasUserRole = signal<boolean>(false);
+  hasUserRole = signal(false);
 
   private oidcSecurityService = inject(OidcSecurityService);
+  private breakpointObserver = inject(BreakpointObserver);
 
-  constructor() {}
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(['(max-width: 912px)'])
+    .pipe(
+      map((result) => result.matches),
+      shareReplay()
+    );
 
-  ngOnInit(): void {
+  constructor() {
     this.oidcSecurityService.checkAuth().subscribe(({ isAuthenticated }) => {
       this.isAuthenticated.set(isAuthenticated);
 
@@ -37,7 +50,6 @@ export class HeaderComponent implements OnInit {
           this.userName.set(
             userData?.userData?.preferred_username || 'Unknown User'
           );
-
           const roles = userData?.userData?.roles || [];
           this.hasUserRole.set(roles.includes('user'));
         });
@@ -48,11 +60,11 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  login(): void {
+  login() {
     this.oidcSecurityService.authorize();
   }
 
-  logout(): void {
+  logout() {
     this.oidcSecurityService.logoff().subscribe();
   }
 }
