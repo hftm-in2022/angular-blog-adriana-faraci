@@ -46,7 +46,7 @@ export class AddBlogPageComponent {
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      this.uploadError = null; // Fehler zurücksetzen
+      this.uploadError = null;
       const reader = new FileReader();
       reader.onload = () => {
         this.headerImageUrl = reader.result as string;
@@ -65,23 +65,25 @@ export class AddBlogPageComponent {
 
     const blogData = {
       ...this.blogForm.value,
-      headerImageUrl: this.headerImageUrl, // Bild-URL hinzufügen
+      headerImageUrl: this.headerImageUrl,
     };
 
     this.blogService.saveBlog(blogData).subscribe(
       () => {
         alert('Blog erfolgreich gespeichert!');
         this.blogForm.reset();
-        this.headerImageUrl = null; // Bild-URL zurücksetzen
+        this.headerImageUrl = null;
+        this.isSaving = false;
       },
       () => {
         alert('Fehler beim Speichern des Blogs.');
+        this.isSaving = false;
       }
     );
   }
 
   onReset() {
     this.blogForm.reset();
-    this.headerImageUrl = null; // Bild-URL zurücksetzen
+    this.headerImageUrl = null; 
   }
 }
