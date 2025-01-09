@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { isAuthenticatedGuard } from './core/guards/auth.guard';
+import { ErrorPageComponent } from './features/error-page/error-page.component';
 
 export const routes: Routes = [
   {
@@ -23,9 +24,13 @@ export const routes: Routes = [
     canActivate: [isAuthenticatedGuard],
   },
   {
-    path: '**',
-    redirectTo: 'overview',
+    path: 'error',
+    component: ErrorPageComponent
   },
+  {
+    path: '**',
+    component: ErrorPageComponent
+  }
 ];
 
 @NgModule({

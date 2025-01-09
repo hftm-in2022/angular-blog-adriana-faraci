@@ -1,21 +1,18 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-@Injectable()
-export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private snackBar: MatSnackBar) {}
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => {
-        this.snackBar.open('Fehler beim Laden der Daten', 'Schließen', {
-          duration: 3000,
-        });
-        return throwError(() => error);
-      })
-    );
-  }
-}
+export const errorInterceptor: HttpInterceptorFn = (req, next) => {
+  const snackBar = inject(MatSnackBar);
+  
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      snackBar.open('Fehler beim Laden der Daten', 'Schließen', {
+        duration: 3000,
+      });
+      return throwError(() => error);
+    })
+  );
+};
