@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
 import { BlogService } from '../../core/services/blog.service';
 import { BlogTitleValidator } from '../../shared/validators/blog-title.validator';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ProgressStateService } from '../../core/services/progress.state.service';
 
 @Component({
   selector: 'app-add-blog',
@@ -22,7 +22,8 @@ export class AddBlogPageComponent {
   constructor(
     private fb: FormBuilder,
     private blogService: BlogService,
-    private blogTitleValidator: BlogTitleValidator
+    private blogTitleValidator: BlogTitleValidator,
+    public progressStateService: ProgressStateService
   ) {
     this.blogForm = this.fb.group({
       title: [
@@ -67,23 +68,16 @@ export class AddBlogPageComponent {
       headerImageUrl: this.headerImageUrl, // Bild-URL hinzufügen
     };
 
-    this.blogService
-      .saveBlog(blogData)
-      .pipe(
-        finalize(() => {
-          this.isSaving = false;
-        })
-      )
-      .subscribe(
-        () => {
-          alert('Blog erfolgreich gespeichert!');
-          this.blogForm.reset();
-          this.headerImageUrl = null; // Bild-URL zurücksetzen
-        },
-        () => {
-          alert('Fehler beim Speichern des Blogs.');
-        }
-      );
+    this.blogService.saveBlog(blogData).subscribe(
+      () => {
+        alert('Blog erfolgreich gespeichert!');
+        this.blogForm.reset();
+        this.headerImageUrl = null; // Bild-URL zurücksetzen
+      },
+      () => {
+        alert('Fehler beim Speichern des Blogs.');
+      }
+    );
   }
 
   onReset() {

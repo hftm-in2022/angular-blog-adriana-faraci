@@ -1,3 +1,8 @@
+
+  <!-- Globaler Spinner -->
+<div *ngIf="progressStateService.isLoading$ | async" class="loading-overlay">
+    <div class="spinner"></div>
+  </div>
 <div class="blog-list">
   @for(blog of blogEntries; track blog.id ){
   <app-blog [blogEntry]="blog"></app-blog>
