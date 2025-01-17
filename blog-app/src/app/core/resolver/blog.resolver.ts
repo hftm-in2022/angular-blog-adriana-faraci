@@ -7,7 +7,7 @@ import { BlogService } from '../services/blog.service';
 @Injectable({
   providedIn: 'root'
 })
-export class BlogResolver implements Resolve<BlogDetails> {
+export class BlogResolver implements Resolve<BlogDetails> {  // resolve function anstelle Klasse verwenden
   constructor(private blogService: BlogService) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<BlogDetails> {

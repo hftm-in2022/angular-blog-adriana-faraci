@@ -10,7 +10,7 @@ import { ProgressStateService } from './progress.state.service';
 @Injectable({
   providedIn: 'root',
 })
-export class BlogService {
+export class BlogService { // state und backend Services sollten getrennt werden
   httpClient = inject(HttpClient);
   private oidcSecurityService = inject(OidcSecurityService);
   private progressStateService = inject(ProgressStateService);
@@ -47,10 +47,10 @@ export class BlogService {
     return this.oidcSecurityService.getAccessToken().pipe(
       switchMap((token) => {
         const headers = new HttpHeaders({
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // token wird über secure route konfiguriert
         });
         return this.httpClient.post<Blog>(
-          `${environment.serviceUrl}/entries`,
+          `${environment.serviceUrl}/entries`,  // keine Validierung
           blog,
           { headers },
         );

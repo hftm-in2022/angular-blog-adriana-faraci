@@ -1,6 +1,6 @@
 
   <!-- Globaler Spinner -->
-<div *ngIf="progressStateService.isLoading$ | async" class="loading-overlay">
+<div *ngIf="progressStateService.isLoading$ | async" class="loading-overlay">  <!-- besser control flow syntax verwenden @if-->
     <div class="spinner"></div>
   </div>
 <div class="blog-list">

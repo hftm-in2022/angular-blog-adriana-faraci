@@ -19,7 +19,7 @@ export class AddBlogPageComponent {
   uploadError: string | null = null;
   headerImageUrl: string | null = null;
 
-  constructor(
+  constructor( // anstelle Constructor injection besser die inject() benutzen
     private fb: FormBuilder,
     private blogService: BlogService,
     private blogTitleValidator: BlogTitleValidator,
@@ -35,11 +35,11 @@ export class AddBlogPageComponent {
     });
   }
 
-  get title() {
+  get title() { // wird nicht benutzt
     return this.blogForm.get('title');
   }
 
-  get content() {
+  get content() { // wird nicht benutzt
     return this.blogForm.get('content');
   }
 
@@ -68,7 +68,7 @@ export class AddBlogPageComponent {
       headerImageUrl: this.headerImageUrl,
     };
 
-    this.blogService.saveBlog(blogData).subscribe(
+    this.blogService.saveBlog(blogData).subscribe( // besser promise / async await verwenden.
       () => {
         alert('Blog erfolgreich gespeichert!');
         this.blogForm.reset();

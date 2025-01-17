@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { z } from 'zod';
 
-const BlogSchema = z.object({
+const BlogSchema = z.object({ // schema im File/Modul erstellen wo es benötigt wird.
   id: z.number(),
   title: z.string(),
   contentPreview: z.string(),

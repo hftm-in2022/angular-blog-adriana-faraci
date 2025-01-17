@@ -5,7 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { BlogService } from '../../core/services/blog.service';
 
 @Injectable({ providedIn: 'root' })
-export class BlogTitleValidator {
+export class BlogTitleValidator {  // anstelle Klasse eine einfache Funktion verwenden, da sie keine Abhängigkeiten hat
   constructor(private blogService: BlogService) {}
 
   validate(control: AbstractControl): Observable<{ titleExists?: boolean } | null> {

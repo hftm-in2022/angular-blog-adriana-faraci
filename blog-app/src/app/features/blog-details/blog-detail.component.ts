@@ -19,8 +19,8 @@ import { BlogDetails } from '../../schemas/blog.shema';
     ],
 })
 export class BlogDetailComponent implements OnInit {
-  blog?: BlogDetails;
-  showComments = false;
+  blog?: BlogDetails; // signal Input
+  showComments = false;  // warum kein signal?
 
   constructor(
     private route: ActivatedRoute,
@@ -28,15 +28,15 @@ export class BlogDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe({
+    this.route.data.subscribe({  // subscribe ohne unsubscribe
       next: (data) => {
-        this.blog = data['blog'];
+        this.blog = data['blog']; // kann via Input verwendet werden, da withComponentInputBinding() konfiguriert ist
       }
     });
   }
 
 navigateBack(): void {
-  this.router.navigate(['']); 
+  this.router.navigate(['']);  // besser via RouterLink im Template
 }
 
   toggleComments() {
